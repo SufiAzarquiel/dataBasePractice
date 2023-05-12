@@ -2,7 +2,7 @@ package org.sufiAzarquiel.basicSqlLearning;
 
 import java.sql.*;
 
-public class FirstDay {
+public class FirstSqlMethods {
     public static void main(String[] args) {
         try {
             Connection conn = connectToDatabase();
