@@ -1,4 +1,4 @@
-package org.sufiAzarquiel.entities;
+package org.sufiAzarquiel.agendaWithDB.entities;
 
 public class Contacto {
     private String dni;
@@ -37,7 +37,7 @@ public class Contacto {
 
     @Override
     public String toString() {
-        return "Contacto{" +
+        return "Habitante{" +
                 "dni='" + dni + '\'' +
                 ", nombre='" + nombre + '\'' +
                 ", telefono=" + telefono +

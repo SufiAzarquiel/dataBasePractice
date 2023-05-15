@@ -1,4 +1,4 @@
-package org.sufiAzarquiel.connection;
+package org.sufiAzarquiel.censo.connection;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
