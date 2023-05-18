@@ -13,7 +13,7 @@ public class DBConnection {
             Class.forName("com.mysql.jdbc.Driver");
 
             // Create a connection to the database
-            String url = "jdbc:mysql://localhost/agenda";
+            String url = "jdbc:mysql://localhost/censo";
             String username = "root";
             String password = "";
 

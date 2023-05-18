@@ -1,7 +1,7 @@
 package org.sufiAzarquiel.censo.dao;
 
-import org.sufiAzarquiel.agendaWithDB.connection.DBConnection;
-import org.sufiAzarquiel.agendaWithDB.entities.Contacto;
+import org.sufiAzarquiel.censo.connection.DBConnection;
+import org.sufiAzarquiel.censo.entities.Habitante;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -17,27 +17,28 @@ public class DAOHabitante {
     }
 
     /**
-     * Save an object to 'contactos' table
-     * Parameters: Object contacto
+     * Save an object to 'habitante' table
+     * Parameters: Object habitante
      */
-    public void addContacto(Contacto contacto) {
+    public void addHabitante(Habitante habitante) {
         // Get connection
         Connection conn = new DBConnection().getConnection();
 
         try {
             // Prepare insert statement
-            String insertSql = "INSERT INTO contactos VALUES (?, ?, ?)";
+            String insertSql = "INSERT INTO habitantes VALUES (?, ?, ?, ?)";
 
             // Create a statement object (this time a prepared statement)
-            PreparedStatement updatestatement = conn.prepareStatement(insertSql);
+            PreparedStatement updateStatement = conn.prepareStatement(insertSql);
 
             // Set values to statement object
-            updatestatement.setString(1, contacto.getDni());
-            updatestatement.setString(2, contacto.getNombre());
-            updatestatement.setLong(3, contacto.getTelefono());
+            updateStatement.setString(1, habitante.getNombre());
+            updateStatement.setString(2, habitante.getEmail());
+            updateStatement.setInt(3, habitante.getEdad());
+            updateStatement.setString(4, habitante.getPoblacion());
 
             // Execute insert statement
-            updatestatement.executeUpdate();
+            updateStatement.executeUpdate();
 
             // Close connection
             conn.close();
@@ -47,20 +48,20 @@ public class DAOHabitante {
     }
 
     /**
-     * Delete an object from 'contactos' table
-     * Parameters: Object contacto
+     * Delete an object from 'habitante' table
+     * Parameters: Object habitante
      */
-    public void deleteContacto(Contacto contacto) {
+    public void deleteHabitante(Habitante habitante) {
         // Get connection
         Connection conn = new DBConnection().getConnection();
 
         try {
             // Prepare delete statement
-            String deleteSql = "DELETE FROM contactos WHERE dni = ?";
+            String deleteSql = "DELETE FROM habitantes WHERE nombre = ?";
 
             // Create a statement object and set values to statement object
             PreparedStatement updateStatement = conn.prepareStatement(deleteSql);
-            updateStatement.setString(1, contacto.getDni());
+            updateStatement.setString(1, habitante.getNombre());
 
             // Execute delete statement and close connection
             updateStatement.executeUpdate();
@@ -71,22 +72,23 @@ public class DAOHabitante {
     }
 
     /**
-     * Update an object from 'contactos' table. The primary key cannot be updated, since it is used to identify the row
-     * Parameters: Object contacto
+     * Update an object from 'habitante' table. The primary key cannot be updated, since it is used to identify the row
+     * Parameters: Object habitante
      */
-    public void updateContacto(Contacto contacto) {
+    public void updateHabitante(Habitante habitante) {
         // Get connection
         Connection conn = new DBConnection().getConnection();
 
         try {
             // Prepare update statement
-            String updateSql = "UPDATE contactos SET nombre = ?, telefono = ? WHERE dni = ?";
+            String updateSql = "UPDATE habitante SET edad = ?, email = ?, poblacion = ?, WHERE nombre = ?";
 
             // Create a statement object and set values to statement object
             PreparedStatement updateStatement = conn.prepareStatement(updateSql);
-            updateStatement.setString(1, contacto.getNombre());
-            updateStatement.setLong(2, contacto.getTelefono());
-            updateStatement.setString(3, contacto.getDni());
+            updateStatement.setInt(1, habitante.getEdad());
+            updateStatement.setString(2, habitante.getEmail());
+            updateStatement.setString(3, habitante.getPoblacion());
+            updateStatement.setString(4, habitante.getNombre());
 
             // Execute delete statement and close connection
             updateStatement.executeUpdate();
@@ -97,20 +99,20 @@ public class DAOHabitante {
     }
 
     /**
-     * Get all objects from 'contactos' table
+     * Get all objects from 'habitante' table
      * Parameters: None
      * Return: ArrayList<Habitante>
      */
-    public ArrayList<Contacto> getContactos() {
+    public ArrayList<Habitante> get() {
         // Create ArrayList
-        ArrayList<Contacto> contactos = new ArrayList<>();
+        ArrayList<Habitante> habitantes = new ArrayList<>();
 
         // Get connection
         Connection conn = new DBConnection().getConnection();
 
         try {
             // Prepare select statement
-            String selectSql = "SELECT * FROM contactos";
+            String selectSql = "SELECT * FROM habitante";
 
             // Create a statement object
             Statement selectStatement = conn.createStatement();
@@ -121,22 +123,67 @@ public class DAOHabitante {
             // Extract data from ResultSet object
             while (rs.next()) {
                 // Retrieve by column name
-                String dni = rs.getString("dni");
                 String nombre = rs.getString("nombre");
-                long telefono = rs.getLong("telefono");
+                String email = rs.getString("email");
+                int edad = rs.getInt("edad");
+                String poblacion = rs.getString("poblacion");
 
                 // Create Habitante object
-                Contacto contacto = new Contacto(dni, nombre, telefono);
+                Habitante habitante = new Habitante(nombre, email, edad, poblacion);
 
                 // Add Habitante object to ArrayList
-                contactos.add(contacto);
+                habitantes.add(habitante);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
         // Return ArrayList
-        return contactos;
+        return habitantes;
+    }
+
+    /**
+     * Get all objects from 'habitante' table with a given 'poblacion'
+     * Parameters: None
+     * Return: ArrayList<Habitante>
+     */
+    public ArrayList<Habitante> getHabitantesDeUnaPoblacion(String poblacion) {
+        // Create ArrayList
+        ArrayList<Habitante> habitantes = new ArrayList<>();
+
+        // Get connection
+        Connection conn = new DBConnection().getConnection();
+
+        try {
+            // Prepare select statement
+            String selectSql = "SELECT * FROM habitante WHERE poblacion = ?";
+
+            // Create a statement object
+            PreparedStatement selectStatement = conn.prepareStatement(selectSql);
+            selectStatement.setString(1, poblacion);
+
+            // Execute select statement and store it in a ResultSet object
+            ResultSet rs = selectStatement.executeQuery();
+
+            // Extract data from ResultSet object
+            while (rs.next()) {
+                // Retrieve by column name
+                String nombre = rs.getString("nombre");
+                String email = rs.getString("email");
+                int edad = rs.getInt("edad");
+
+                // Create Habitante object
+                Habitante habitante = new Habitante(nombre, email, edad, poblacion);
+
+                // Add Habitante object to ArrayList
+                habitantes.add(habitante);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        // Return ArrayList
+        return habitantes;
     }
 
     /**
@@ -144,6 +191,7 @@ public class DAOHabitante {
      * Parameters: String dni
      * Return: Habitante
      */
+    /*
     public Contacto getContacto(String dni) {
         // Create Habitante object
         Contacto contacto = null;
@@ -183,4 +231,5 @@ public class DAOHabitante {
             return null;
         }
     }
+    */
 }

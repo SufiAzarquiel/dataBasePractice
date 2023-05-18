@@ -161,7 +161,7 @@ public class VentanaCenso extends JFrame {
 	}
 
 	private void cargarTablaHabitantes() {
-		ArrayList<Poblacion> lista;
+		ArrayList<Habitante> lista;
 		if(tablePoblacion.getSelectedRow()!=-1) {
 			lista = daoHabitante.getHabitantesDeUnaPoblacion((String)tablePoblacion.getValueAt(tablePoblacion.getSelectedRow(), 0));
 		}else {

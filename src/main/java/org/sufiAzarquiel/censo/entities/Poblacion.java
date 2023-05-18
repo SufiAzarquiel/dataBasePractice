@@ -17,11 +17,11 @@ public class Poblacion {
         this.nombre = nombre;
     }
 
-    public int getNumHabitantes() {
+    public int getNumeroDeHabitantes() {
         return numHabitantes;
     }
 
-    public void setNumHabitantes(int numHabitantes) {
+    public void setNumeroDeHabitantes(int numHabitantes) {
         this.numHabitantes = numHabitantes;
     }
 
