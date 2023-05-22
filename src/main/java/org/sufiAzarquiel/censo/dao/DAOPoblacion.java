@@ -13,7 +13,7 @@ public class DAOPoblacion {
      */
 
     public DAOPoblacion() {
-        // TODO Auto-generated constructor stub
+
     }
 
     /**
@@ -46,9 +46,11 @@ public class DAOPoblacion {
     }
 
     /**
+     * <pre>
      * Get all objects from 'poblacion' table
      * Parameters: None
      * Return: ArrayList<Poblacion>
+     * </pre>
      */
     public ArrayList<Poblacion> get() {
         // Create ArrayList
@@ -60,6 +62,48 @@ public class DAOPoblacion {
         try {
             // Prepare select statement
             String selectSql = "SELECT * FROM poblacion";
+
+            // Create a statement object
+            Statement selectStatement = conn.createStatement();
+
+            // Execute select statement and store it in a ResultSet object
+            ResultSet rs = selectStatement.executeQuery(selectSql);
+
+            // Extract data from ResultSet object
+            while (rs.next()) {
+                // Retrieve by column name
+                String nombre = rs.getString("nombre");
+                int numeroDeHabitantes = rs.getInt("numeroHabitantes");
+
+                // Create Poblacion object
+                Poblacion poblacion = new Poblacion(nombre, numeroDeHabitantes);
+
+                // Add Poblacion object to ArrayList
+                poblaciones.add(poblacion);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        // Return ArrayList
+        return poblaciones;
+    }
+
+    /**
+     * Get all objects from 'poblacion' table where 'numeroDeHabitantes' is 0
+     * Parameters: None
+     * Return: ArrayList<Poblacion>
+     */
+    public ArrayList<Poblacion> getVacios() {
+        // Create ArrayList
+        ArrayList<Poblacion> poblaciones = new ArrayList<>();
+
+        // Get connection
+        Connection conn = new DBConnection().getConnection();
+
+        try {
+            // Prepare select statement
+            String selectSql = "SELECT * FROM poblacion WHERE numeroHabitantes = 0";
 
             // Create a statement object
             Statement selectStatement = conn.createStatement();

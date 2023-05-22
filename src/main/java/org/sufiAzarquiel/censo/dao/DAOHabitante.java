@@ -13,12 +13,13 @@ public class DAOHabitante {
      */
 
     public DAOHabitante() {
-        // TODO Auto-generated constructor stub
     }
 
     /**
+     * <pre>
      * Save an object to 'habitante' table
      * Parameters: Object habitante
+     * </pre>
      */
     public void addHabitante(Habitante habitante) {
         // Get connection
@@ -48,8 +49,10 @@ public class DAOHabitante {
     }
 
     /**
+     * <pre>
      * Delete an object from 'habitante' table
      * Parameters: Object habitante
+     * </pre>
      */
     public void deleteHabitante(Habitante habitante) {
         // Get connection
@@ -72,8 +75,10 @@ public class DAOHabitante {
     }
 
     /**
+     * <pre>
      * Update an object from 'habitante' table. The primary key cannot be updated, since it is used to identify the row
      * Parameters: Object habitante
+     * </pre>
      */
     public void updateHabitante(Habitante habitante) {
         // Get connection
@@ -99,9 +104,11 @@ public class DAOHabitante {
     }
 
     /**
+     * <pre>
      * Get all objects from 'habitante' table
      * Parameters: None
      * Return: ArrayList<Habitante>
+     * </pre>
      */
     public ArrayList<Habitante> get() {
         // Create ArrayList
@@ -143,9 +150,11 @@ public class DAOHabitante {
     }
 
     /**
+     * <pre>
      * Get all objects from 'habitante' table with a given 'poblacion'
      * Parameters: None
      * Return: ArrayList<Habitante>
+     * </pre>
      */
     public ArrayList<Habitante> getHabitantesDeUnaPoblacion(String poblacion) {
         // Create ArrayList
