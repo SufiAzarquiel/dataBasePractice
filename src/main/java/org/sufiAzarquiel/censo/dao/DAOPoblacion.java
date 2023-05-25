@@ -46,7 +46,7 @@ public class DAOPoblacion {
     }
 
     /**
-     * <pre>
+     *  <pre>
      * Get all objects from 'poblacion' table
      * Parameters: None
      * Return: ArrayList<Poblacion>

@@ -6,13 +6,13 @@ import org.sufiAzarquiel.agendaWithDB.entities.Contacto;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class DaoContactos {
+public class DAOContactos {
     /**
      * ---------- CRUD ----------
      * Generate objects from rows and vice-versa
      */
 
-    public DaoContactos() {
+    public DAOContactos() {
         // TODO Auto-generated constructor stub
     }
 
